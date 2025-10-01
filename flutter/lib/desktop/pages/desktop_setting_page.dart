@@ -2319,7 +2319,7 @@ Widget _OptionCheckBox(
   String label,
   String key, {
   Function(bool)? update,
-  bool reverse = false,
+  bool reverse = true,
   bool enabled = true,
   Icon? checkedIcon,
   bool? fakeValue,
