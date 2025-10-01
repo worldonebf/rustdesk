@@ -2319,19 +2319,24 @@ Widget _OptionCheckBox(
   String label,
   String key, {
   Function(bool)? update,
-  bool reverse = true,
+  bool reverse = false,
   bool enabled = true,
   Icon? checkedIcon,
   bool? fakeValue,
   bool isServer = true,
   bool Function()? optGetter,
   Future<void> Function(String, bool)? optSetter,
+  bool defaultValue = true, // 新增参数：默认值为 true
 }) {
-  getOpt() => optGetter != null
-      ? optGetter()
-      : (isServer
-          ? mainGetBoolOptionSync(key)
-          : mainGetLocalBoolOptionSync(key));
+  // 获取选项值，若为空则使用 defaultValue
+  bool getOpt() {
+    bool? value = optGetter != null
+        ? optGetter()
+        : (isServer
+            ? mainGetBoolOptionSync(key)
+            : mainGetLocalBoolOptionSync(key));
+    return value ?? defaultValue; // 🆕 返回默认值
+  }
   bool value = getOpt();
   final isOptFixed = isOptionFixed(key);
   if (reverse) value = !value;
