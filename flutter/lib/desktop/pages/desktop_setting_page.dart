@@ -2326,17 +2326,12 @@ Widget _OptionCheckBox(
   bool isServer = true,
   bool Function()? optGetter,
   Future<void> Function(String, bool)? optSetter,
-  bool defaultValue = true, // 新增参数：默认值为 true
 }) {
-  // 获取选项值，若为空则使用 defaultValue
-  bool getOpt() {
-    bool? value = optGetter != null
-        ? optGetter()
-        : (isServer
-            ? mainGetBoolOptionSync(key)
-            : mainGetLocalBoolOptionSync(key));
-    return value ?? defaultValue; // 🆕 返回默认值
-  }
+  getOpt() => optGetter != null
+      ? optGetter()
+      : (isServer
+          ? mainGetBoolOptionSync(key)
+          : mainGetLocalBoolOptionSync(key));
   bool value = getOpt();
   final isOptFixed = isOptionFixed(key);
   if (reverse) value = !value;
